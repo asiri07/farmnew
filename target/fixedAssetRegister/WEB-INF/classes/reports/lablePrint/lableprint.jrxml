@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+        name="classic"
+        columnCount="4"
+        printOrder="Vertical"
+        orientation="Portrait"
+        pageWidth="595"
+        pageHeight="842"
+        columnWidth="133"
+        columnSpacing="0"
+        leftMargin="30"
+        rightMargin="30"
+        topMargin="20"
+        bottomMargin="20"
+        whenNoDataType="NoPages"
+        isTitleNewPage="false"
+        isSummaryNewPage="false">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+    <import value="it.businesslogic.ireport.IReportScriptlet"/>
+
+    <parameter name="fromcord" isForPrompting="true" class="java.lang.String"/>
+    <parameter name="tocord" isForPrompting="true" class="java.lang.String"/>
+    <queryString><![CDATA[SELECT   asset.AS_CODE,lm.LOC_CODE FROM   asset,asset_location_details AS ald ,location_master AS lm
+WHERE asset.AS_ID= ald.AS_ID AND ald.LOC_ID=lm.LOC_ID AND ald.IS_ACTIVE='1' AND  asset.AS_ID BETWEEN $P{fromcord} AND  $P{tocord}]]></queryString>
+
+    <field name="AS_CODE" class="java.lang.String"/>
+    <field name="LOC_CODE" class="java.lang.String"/>
+
+    <background>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </background>
+    <title>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </title>
+    <pageHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="44" isSplitAllowed="true">
+            <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        x="30"
+                        y="0"
+                        width="95"
+                        height="16"
+                        key="textField"/>
+                <box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000"
+                     leftPadding="2" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin"
+                     bottomBorderColor="#000000"/>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{LOC_CODE}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        x="30"
+                        y="16"
+                        width="95"
+                        height="16"
+                        key="textField"/>
+                <box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000"
+                     leftPadding="2" rightBorder="Thin" rightBorderColor="#000000" bottomBorder="Thin"
+                     bottomBorderColor="#000000"/>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{AS_CODE}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement
+                        x="0"
+                        y="0"
+                        width="30"
+                        height="16"
+                        key="staticText-1"/>
+                <box topBorder="Thin" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000"
+                     leftPadding="5" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin"
+                     bottomBorderColor="#000000"/>
+                <textElement>
+                    <font/>
+                </textElement>
+                <text><![CDATA[Adm]]></text>
+            </staticText>
+            <staticText>
+                <reportElement
+                        x="0"
+                        y="16"
+                        width="30"
+                        height="16"
+                        key="staticText-2"/>
+                <box topBorder="None" topBorderColor="#000000" leftBorder="Thin" leftBorderColor="#000000"
+                     leftPadding="5" rightBorder="None" rightBorderColor="#000000" bottomBorder="Thin"
+                     bottomBorderColor="#000000"/>
+                <textElement>
+                    <font/>
+                </textElement>
+                <text><![CDATA[Act]]></text>
+            </staticText>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </summary>
+</jasperReport>

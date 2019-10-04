@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="defaultTemplate" template="/WEB-INF/views/layouts/mainLayout.jsp">
+        <put-attribute name="header"
+                       value="/WEB-INF/views/defaultTemplate/defaultHeader.jsp"/>
+        <put-attribute name="menu"
+                       value="/WEB-INF/views/defaultTemplate/defaultMenu.jsp"/>
+        <put-attribute name="body"
+                       value="/WEB-INF/views/defaultTemplate/defaultContent.jsp"/>
+        <put-attribute name="footer"
+                       value="/WEB-INF/views/defaultTemplate/defaultFooter.jsp"/>
+    </definition>
+
+    <definition name="*-tile" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/{1}.jsp"/>
+    </definition>
+
+    <definition name="login" template="/WEB-INF/views/pages/login.jsp">
+        <put-attribute name="title" value="Login"/>
+    </definition>
+
+    <definition name="*-category" extends="defaultTemplate">
+        <put-attribute name="body"
+                       value="/WEB-INF/views/pages/category/{1}.jsp"/>
+    </definition>
+
+    <definition name="success" template="/WEB-INF/views/pages/message/success.jsp">
+        <put-attribute name="title" value="Success"/>
+    </definition>
+
+    <definition name="*-allocation" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/allocation/{1}.jsp"/>
+    </definition>
+
+    <definition name="*-data" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/data/{1}.jsp"/>
+    </definition>
+
+    <definition name="*-library" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/library/{1}.jsp"/>
+    </definition>
+    <definition name="*-reports" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/reports/{1}.jsp"/>
+    </definition>
+
+    <definition name="*-asset" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/asset/{1}.jsp"/>
+    </definition>
+
+    <definition name="*-option" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/option/{1}.jsp"/>
+    </definition>
+
+    <definition name="*-upload" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/upload/{1}.jsp"/>
+    </definition>
+
+    <definition name="*-location" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/location/{1}.jsp"/>
+    </definition>
+
+    <definition name="*-maintenance" extends="defaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/pages/maintenance/{1}.jsp"/>
+    </definition>
+
+</tiles-definitions>

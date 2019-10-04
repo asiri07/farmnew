@@ -1,0 +1,682 @@
+asset_improvement
+	CURRENCY_TYPE - int 5
+	CURRENCY_VALUE - double 16,0
+
+disposal
+	CURRENCY_TYPE - int 5
+	CURRENCY_VALUE - double 16,0
+	DP_VALUE - double 16,0
+
+remove the relationship between currenct and currenctRate
+Drop `currency_rate` table and Create Table
+
+CREATE TABLE `currency_rate` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `CURRENCY_FROM` int(10) DEFAULT NULL,
+  `CURRENCY_TO` int(10) DEFAULT NULL,
+  `EXCHANGE_RATE` double(16,0) DEFAULT NULL,
+  `DATE` date DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_currency_rate` (`CURRENCY_FROM`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+maintenance_fixtures_fittings
+    `WIDTH` varchar(6) DEFAULT NULL,
+    `IS_SERVICE_AGRE` tinyint(1) DEFAULT '0',
+
+`maintenance_fixtures_fittings_history`
+    `WIDTH` varchar(6) DEFAULT NULL,
+    `IS_SERVICE_AGRE` tinyint(1) DEFAULT '0',
+
+`maintenance_lab_equipment`
+    `HEIGHT` varchar(6) DEFAULT NULL,
+
+`maintenance_lab_equipment_history`
+   `HEIGHT` varchar(6) DEFAULT NULL,
+
+
+
+CREATE TABLE `maintenance_modification` (
+  `MODIFICATION_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `MODI_TYPE` varchar(10) DEFAULT NULL,
+  `MODI_DA` date DEFAULT NULL,
+  `MODI_WORK` varchar(200) DEFAULT NULL,
+  `MODI_COST` double DEFAULT NULL,
+  `MODI_REASON` varchar(200) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `ACTION_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`MODIFICATION_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1
+
+CREATE TABLE `maintenance_modification_history` (
+  `ID` int(11) NOT NULL,
+  `MODIFICATION_ID` int(11) DEFAULT NULL,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `MODI_TYPE` varchar(10) DEFAULT NULL,
+  `MODI_DATE` date DEFAULT NULL,
+  `MODI_WORK` varchar(200) DEFAULT NULL,
+  `MODI_COST` double DEFAULT NULL,
+  `MODI_REASON` varchar(200) DEFAULT NULL,
+  `UPDATE_USER` int(11) DEFAULT NULL,
+  `UPDATE_TIME` timestamp NULL DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `maintenance_maintenance_data` (
+  `MAINTENANCE_DATA_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TRANSACTION_NO` int(11) NOT NULL,
+  `ASSET_ID` int(10) DEFAULT NULL,
+  `MAINT_ENTRY_DA` date DEFAULT NULL,
+  `MAINT_DA` date DEFAULT NULL,
+  `MAINT_WORK` varchar(200) DEFAULT NULL,
+  `MAINT_METER` int(10) DEFAULT NULL,
+  `MAINT_MASTER` varchar(200) DEFAULT NULL,
+  `MAINT_COST` double DEFAULT NULL,
+  `MAINT_AC_CODE` int(11) DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`MAINTENANCE_DATA_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1
+
+
+CREATE TABLE `asset_category_master` (
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `ASSET_CATE` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `accessory_master` (
+  `ACCER_CODE` int(10) NOT NULL AUTO_INCREMENT,
+  `ACCER_NAME` varchar(200) DEFAULT NULL,
+  `ASSET_CATE` int(10) DEFAULT NULL,
+  PRIMARY KEY (`ACCER_CODE`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+
+
+
+CREATE TABLE `maintenance_running_data` (
+  `RUNNING_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TRANSACTION_NO` int(10) DEFAULT NULL,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `DATE` date DEFAULT NULL,
+  `TIME` timestamp NOT NULL,
+  `MET_FRO_NO` int(14) DEFAULT NULL,
+  `MET_TO_NO` int(14) DEFAULT NULL,
+  `COST` double DEFAULT NULL,
+  `REMARK` varchar(100) DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`RUNNING_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8
+
+
+************ DONE *************
+
+2019-09-25
+report_preparation_data
+Add field - CURRENCY_TYPE int(5)
+
+Add line - a_subtab table
+Sub_Tab_Name - View Assets
+RefPage - data/viewAsset
+Ordertab - 2 (rearrange the other ordertab)
+
+2019-01-29
+
+copy "a_subtab" table from AWS account.
+
+
+CREATE TABLE `maintenance_service_agreement` (
+  `AGREE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ASSET_ID` varchar(11) DEFAULT NULL,
+  `AGREE_NUMBER` varchar(20) DEFAULT NULL,
+  `AGREE_PERIOD` varchar(50) DEFAULT NULL,
+  `AGREE_FROM` date DEFAULT NULL,
+  `AGREE_TO` date DEFAULT NULL,
+  `AGREE_COST` double DEFAULT NULL,
+  `AGREE_COMPANY` varchar(100) DEFAULT NULL,
+  `AGREE_SERVICE_INTERVAL` varchar(10) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `ACTION_TIME` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`AGREE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+CREATE TABLE `maintenance_service_agreement_history` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `AGREE_ID` INT(11) DEFAULT NULL,
+  `ASSET_ID` VARCHAR(11) DEFAULT NULL,
+  `AGREE_NUMBER` VARCHAR(20) DEFAULT NULL,
+  `AGREE_PERIOD` VARCHAR(50) DEFAULT NULL,
+  `AGREE_FROM` DATE DEFAULT NULL,
+  `AGREE_TO` DATE DEFAULT NULL,
+  `AGREE_COST` DOUBLE DEFAULT NULL,
+  `AGREE_COMPANY` VARCHAR(100) DEFAULT NULL,
+  `AGREE_SERVICE_INTERVAL` VARCHAR(10) DEFAULT NULL,
+  `UPDATE_USER` INT(11) DEFAULT NULL,
+  `UPDATE_TIME` TIMESTAMP NULL DEFAULT NULL,
+  `USER_ID` INT(10) DEFAULT NULL,
+  `ACTION_TIME` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=INNODB DEFAULT CHARSET=latin1
+
+Unable to save date colums in Maintenance Data & Running Data page.
+Transaction number must auto generate after clicked the SAVE button.
+
+2019-01-30
+
+copy "a_subtab" table from AWS account.
+
+"maintenance_running_data" table is Changed.
+
+CREATE TABLE `maintenance_running_data` (
+  `RUNNING_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TRANSACTION_NO` int(10) DEFAULT NULL,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `DATE` date DEFAULT NULL,
+  `TIME` varchar(10) DEFAULT NULL,
+  `MET_FRO_NO` int(14) DEFAULT NULL,
+  `MET_TO_NO` int(14) DEFAULT NULL,
+  `COST` double DEFAULT NULL,
+  `REMARK` varchar(100) DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`RUNNING_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8
+
+
+2019/02/05
+
+asset_category_master table is dropped.
+
+accessory_master table is changed.
+
+CREATE TABLE `accessory_master` (
+  `ACCER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ACCER_CODE` varchar(10) DEFAULT NULL,
+  `ACCER_NAME` varchar(200) DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`ACCER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8
+
+Added a new table named as accessory_assigning
+
+CREATE TABLE `accessory_assigning` (
+  `ACCESSORY_ASSIGNING_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ASSET_ID` int(10) DEFAULT NULL,
+  `ACCESSORY_ID` int(10) DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`ACCESSORY_ASSIGNING_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8
+
+
+2019-02-01
+
+asset
+    `MANUFACTURER` varchar(50) DEFAULT NULL,
+    `ORIGINAL_COST` varchar(100) DEFAULT NULL,
+    `FUNDING_SOURCE` varchar(100) DEFAULT NULL,
+
+
+CREATE TABLE `asset_revaluation` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `LOCATION_ID` INT(11) DEFAULT NULL,
+  `DETAIL_ID` VARCHAR(11) DEFAULT NULL,
+  `DETAIL_CODE` VARCHAR(45) DEFAULT NULL,
+  `DESCRIPTION` VARCHAR(100) DEFAULT NULL,
+  `BALANCE` DOUBLE DEFAULT '0',
+  `VALUE` DOUBLE DEFAULT '0',
+  `DATE` DATE DEFAULT NULL,
+  `USER_ID` INT(11) DEFAULT NULL,
+  `ACTION_TIME` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+
+"maintenance_running_data" table is Changed.
+
+CREATE TABLE `maintenance_running_data` (
+  `RUNNING_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TRANSACTION_NO` int(10) DEFAULT NULL,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `DATE` date DEFAULT NULL,
+  `TIME` varchar(10) DEFAULT NULL,
+  `MET_FRO_NO` int(14) DEFAULT NULL,
+  `MET_TO_NO` int(14) DEFAULT NULL,
+  `COST` double DEFAULT NULL,
+  `REMARK` varchar(100) DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`RUNNING_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8
+
+
+2019-02-06
+asset
+    `IS_LEASING` tinyint(1) DEFAULT '0',
+
+
+2019/02/08
+
+Please check AccessoryAssigning.jsp--->loadAccessoryTable function
+file Missing
+Please check AccessoryAssigning.jsp--->loadAccesoryTable function
+
+2019/02/11
+
+Data types of following fields are changed.
+
+** maintenance_maintenance_data table
+    MAINT_DA varchar(10) NULL
+
+** maintenance_running_data table
+    DATE varchar(12) NULL
+
+There is a problem with right alignment in my reports.
+
+2019/02/12
+
+Leasse asset page is working well in my laptop.I do not know what happened. I think that I forget to add maintenance_lease_asset Table into the db_changers.
+Sorry for the inconveniences that caused me.
+
+maintenance_lease_asset Table
+
+CREATE TABLE `maintenance_lease_asset` (
+  `LEASE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `LEASE_TYPE` varchar(25) DEFAULT NULL,
+  `LEASE_AGRE_NO` int(11) DEFAULT NULL,
+  `LEASE_TOT` double DEFAULT NULL,
+  `LEASE_NO_PREMIUM` int(11) DEFAULT NULL,
+  `LEASE_PREMIUM` double DEFAULT NULL,
+  `LEASE_PREMIUM_DATE` varchar(10) DEFAULT NULL,
+  `LEASE_PERIOD_FROM` date DEFAULT NULL,
+  `LEASE_PERIOD_TO` date DEFAULT NULL,
+  `LEASE_COMPANY` varchar(200) DEFAULT NULL,
+  `CONTACT_PERSON` varchar(50) DEFAULT NULL,
+  `LEASE_ADDRESS` varchar(200) DEFAULT NULL,
+  `LEASE_TELEPHONE_NO` varchar(20) DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  `ACTION_TIME` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`LEASE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1
+
+2019-02-14
+
+* Drop asset_category_master table.
+
+///////////////////////////////2019-02-19////////////
+
+asset view, delete option - done
+master code dissable option not working - Done
+maintance data edit option (when select the asset code load data entire field)
+maintancane data boolen value not updated. - done
+logout option not working (other pages) - done
+
+
+
+2019-02-21
+
+* Remove following directories which are located in WEB-INF--> reports.
+    -maintenanceData
+    -runningData
+
+* Change the data type of following fields.
+    -Asset table
+        IS_LEASING int(1) NULL
+
+    -maintenance_computer
+        IS_WARRANTY int(1)  NULL
+        IS_INSURANCE int(1) NULL
+
+    -maintenance_plant_machinary
+        IS_WARRANTY int(1) NULL
+        IS_INSURANCE int(1) NULL
+        IS_SERVICE_AGRE int(1) NULL
+
+    -maintenance_furniture
+        IS_WARRANTY int(1) NULL
+        IS_INSURANCE int(1) NULL
+
+    -maintenance_office_equipment,maintenance_lab_equipment,maintenance_teaching_equipment,maintenance_fixtures_fittings
+     maintenance_sport_equipment
+
+        IS_WARRANTY int(1) NULL
+        IS_INSURANCE int(1) NULL
+        IS_SERVICE_AGRE int(1) NULL
+
+    -maintenance_software
+        IS_SERVICE_AGREint(1) NULL
+
+
+
+2019-02-22 -MsD
+add field asset table - QR_PATH - varchar(100)
+MaintenanceLand change datetime to data format
+
+2019-02-27
+
+Remove relationship between asset and asset_location_details and location_master (remove many to many relationship between asset and location_master)
+Add new relationship between asset and location_master - (many to one)
+please look AWS database
+
+remove extra assetId and location id from assetLocationDetail table
+remove isActive Fields from assetLocationDetail.
+
+2019-03-013
+
+* Change the followings.
+    - Modification table
+        MODI_TYPE - int(1)
+
+    - maintenance_data
+        LEASE_TYPE - int(1)
+        LEASE_PREMIUM_DATE - int(1)
+
+* Change the data type of following fields( maintenance_data & running_data,Damage Tables).
+    TRANSACTION_NO - Varchar
+
+ 2019-03-14
+
+ * Add a (TRANSACTION_NO) column for following tables.
+    -   damage
+    -   asset_improvement
+    -   disposal
+
+
+* Added two new tables
+CREATE TABLE `maintenance_maintenance_data_history` (
+  `MAINTENANCE_DATA_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TRANSACTION_NO` varchar(11) NOT NULL,
+  `ASSET_ID` int(10) DEFAULT NULL,
+  `MAINT_ENTRY_DA` date DEFAULT NULL,
+  `MAINT_DA` varchar(12) DEFAULT NULL,
+  `MAINT_WORK` varchar(200) DEFAULT NULL,
+  `MAINT_METER` int(10) DEFAULT NULL,
+  `MAINT_MASTER` varchar(200) DEFAULT NULL,
+  `MAINT_COST` double(30,2) DEFAULT NULL,
+  `MAINT_AC_CODE` int(11) DEFAULT NULL,
+  `UPDATE_USER` int(11) DEFAULT NULL,
+  `UPDATE_TIME` timestamp NULL DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`MAINTENANCE_DATA_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1
+
+
+CREATE TABLE `maintenance_running_data_history` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `RUNNING_ID` int(11) DEFAULT NULL,
+  `TRANSACTION_NO` varchar(8) DEFAULT NULL,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `DATE` varchar(12) DEFAULT NULL,
+  `TIME` varchar(25) DEFAULT NULL,
+  `MET_FRO_NO` int(14) DEFAULT NULL,
+  `MET_TO_NO` int(14) DEFAULT NULL,
+  `COST` double(30,2) DEFAULT NULL,
+  `REMARK` varchar(100) DEFAULT NULL,
+  `UPDATE_USER` int(11) DEFAULT NULL,
+  `UPDATE_TIME` timestamp NULL DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` datetime NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8
+
+2019-03-18
+
+Please check following issues.
+
+Current Issues
+•	Asset Physical Verification & Asset Revaluation page are not working properly.
+•	Save button is not work in Damaged,improvements,Disposal Pages.
+
+2019-03-27
+maintenance_land
+EXTENT varchar(20)
+DEED_TYPE int(20)
+Please check following issues of document which was sent by Sachika.
+
+*   1.2
+*   3.0
+*   7.0 - location number of all the assets are not updated when doing bulk transfer. - done
+
+maintenance_land_history
+EXTENT varchar(20)
+DEED_TYPE int(20)
+
+maintenance_land_building
+EXTENT varchar(20)
+DEED_TYPE int(20)
+
+maintenance_land_building_history
+EXTENT varchar(20)
+DEED_TYPE int(20)
+
+2019-03-29
+Need to fix the User Job Define and all user screen - Maheendra
+
+2019-04-03
+
+Added a new table named as "asset_type"
+
+CREATE TABLE `asset_type` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TYPE` varchar(100) DEFAULT NULL,
+  `QTY` int(11) DEFAULT '0',
+  `ACTION_TIME` datetime DEFAULT NULL,
+  `USER_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1
+
+
+2019-04-04
+
+* Changes done for  maintenance_land_building_history_table
+
+- Drop following Fields.
+    LandBuildingHistoryID       int(11) NOT NULL
+    LAND_BUILDING_HISTORY_ID    varchar(255) NULL
+    ASSET_CODE                  varchar(255) NULL
+    TRANSACTION_NO              int(11) NULL
+
+CREATE TABLE `maintenance_land_building_history` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `LAND_BUILDING_ID` int(11) DEFAULT NULL,
+  `ASSET_ID` int(11) DEFAULT NULL,
+  `BUILDING_ADDRESS1` varchar(20) DEFAULT NULL,
+  `BUILDING_ADDRESS2` varchar(20) DEFAULT NULL,
+  `BUILDING_ADDRESS3` varchar(20) DEFAULT NULL,
+  `BUILDING_ADDRESS4` varchar(20) DEFAULT NULL,
+  `DEED_TYPE` varchar(20) DEFAULT NULL,
+  `DEED_NO` varchar(6) DEFAULT NULL,
+  `DEED_SIGNED_DATE` datetime DEFAULT NULL,
+  `DEED_REGISTER_DATE` datetime DEFAULT NULL,
+  `DEED_VALUE` double(16,0) DEFAULT '0',
+  `EXTENT` varchar(16) DEFAULT NULL,
+  `COMMENTS` varchar(200) DEFAULT NULL,
+  `ASSESSEMENT_NO` varchar(6) DEFAULT NULL,
+  `ASSESSEMENT_VALUE` double(16,0) DEFAULT '0',
+  `BUILDING_STORIED` int(3) DEFAULT '0',
+  `BUILDING_PLAN_NO` varchar(6) DEFAULT NULL,
+  `COC_NO` varchar(6) DEFAULT NULL,
+  `ATTESTER` varchar(100) DEFAULT NULL,
+  `ATTESTER_ADDRESS` varchar(200) DEFAULT NULL,
+  `SELLER` varchar(100) DEFAULT NULL,
+  `SELLER_ADDRESS` varchar(200) DEFAULT NULL,
+  `GRA_NIL_DIV_NO` varchar(6) DEFAULT NULL,
+  `DIVISION_NO` varchar(6) DEFAULT NULL,
+  `SURVEY_PLAN_NO` varchar(6) DEFAULT NULL,
+  `SURVEY_NAME` varchar(100) DEFAULT NULL,
+  `SURVEY_ADDRESS` varchar(200) DEFAULT NULL,
+  `SURVEY_TELEPHONE` varchar(20) DEFAULT NULL,
+  `SURVEY_DATE` varchar(15) DEFAULT NULL,
+  `LOT_NO` varchar(6) DEFAULT NULL,
+  `LAND_NAME` varchar(100) DEFAULT NULL,
+  `LAND_SITUATED` varchar(100) DEFAULT NULL,
+  `LAND_PROVINCIAL_AREA` varchar(100) DEFAULT NULL,
+  `LAND_DISTRICT` varchar(100) DEFAULT NULL,
+  `LAND_PROVINCE` varchar(100) DEFAULT NULL,
+  `IS_INSURANCE` tinyint(1) DEFAULT '0',
+  `UPDATE_USER` int(11) DEFAULT NULL,
+  `UPDATE_TIME` timestamp NULL DEFAULT NULL,
+  `USER_ID` int(10) DEFAULT NULL,
+  `ACTION_TIME` datetime DEFAULT NULL,
+  `BUILDING_INSURANCE` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+
+* Drop following field from maintenance_plant_machinary.
+    plantId-int(11) NOT NULL ( Last row)
+
+
+
+Alter cloumn Asset table
+    ALTER TABLE ASSET;
+    ALTER COLUMN FILE_PATH varchar(255) DEFAULT NULL;
+
+2019-04-05
+
+*   Add a new fields to asset category Main table.
+    -   QTY int(11) NULL
+    -   ASSET_TYPE_ID int(11) Null
+
+    2019-04-25
+    ALTER TABLE currency
+    MODIFY  DESCRIPTION VARCHAR(50) NULL;
+
+    ALTER TABLE currency_rate
+    MODIFY  EXCHANGE_RATE DOUBLE(16,4) DEFAULT NULL;
+
+
+    2019-04-25
+    ALTER TABLE currency
+    MODIFY  DESCRIPTION VARCHAR(50) NULL;
+
+    ALTER TABLE currency_rate
+    MODIFY  EXCHANGE_RATE DOUBLE(16,4) DEFAULT NULL;
+
+2019-04-29
+
+*   Change data type of fuel type field in maintenance_vehicle & maintenance_vehicle_history tables.
+
+        TYPE_FUEL int(2) NULL
+
+*   Change data type of Computer type field in maintenance_computer & maintenance_computer_history tables.
+
+        COM_TYPE int(2) NULL
+
+*   Delete "ID" & "TRANSACTION_NO" fields from maintenance_computer_history tables.
+
+
+2019-04-30
+
+*   Added a new field into maintenance_vehicle & maintenance_vehicle_history tables.
+
+        WIDTH   varchar(6) NULL
+
+
+*   Added a new fields into maintenance_insurance & maintenance_insurance_history tables.
+
+        PREMIUM         double(14,2)    NULL
+        CURRENCY_TYPE   int(2)          NULL
+
+
+
+*   Changed data type of insurance_period from varchar to integer in  maintenance_insurance & maintenance_insurance_history tables.
+
+        INSURANCE_PERIOD    int(10)     NULL
+
+2019-05-02
+
+*   Added a new fields into maintenance_modification & maintenance_modification_history tables.
+
+        CURRENCY_TYPE   int(2)          NULL
+
+
+*   Removed following field from maintenance_modification & maintenance_modification_history tables.
+
+        mainDa   DateTime  ;
+
+
+*   Added a new field into maintenance_maintenance_data ,maintenance_maintenance_data_history,maintenance_running_data &
+    maintenance_running_data_history.
+
+        CURRENCY_TYPE   int(2)          NULL
+
+
+2019-05-02
+
+*   add new field as CATEGORY varchar(50) to maintenance_insurance
+
+
+2019-05-06
+
+*   Changed data type of LEASE_NO_PREMIUM(int) field  into varchar in maintenance_lease_asset & maintenance_lease_asset_history
+
+          LEASE_NO_PREMIUM varchar
+
+2019-05-09
+    ALTER TABLE `maintenance_running_data`
+    CHANGE `MET_FRO_NO` `MET_FRO_NO` DOUBLE NULL ;
+
+    ALTER TABLE `maintenance_running_data`
+    CHANGE `MET_TO_NO` `MET_TO_NO` DOUBLE NULL ;
+
+    ALTER TABLE `maintenance_maintenance_data`
+    CHANGE `MET_TO_NO` `MET_TO_NO` DOUBLE NULL ;
+
+    2019-05-20
+
+    ALTER TABLE maintenance_software;
+    ALTER COLUMN DESCRIPTION varchar(255) DEFAULT NULL;
+
+    ALTER TABLE maintenance_software_history;
+    ALTER COLUMN DESCRIPTION varchar(255) DEFAULT NULL;
+
+    2019-06-14
+
+ *    Created a new table named as "lease_asset_reminders"
+
+        CREATE TABLE `lease_asset_reminders` (
+          `ID` int(11) NOT NULL AUTO_INCREMENT,
+          `ASSET_ID` int(11) DEFAULT NULL,
+          `TRANSACTION_NO` varchar(8) DEFAULT NULL,
+          `PREMIUM_DATE` date DEFAULT NULL,
+          `PREMIUM` double(16,2) DEFAULT '0.00',
+          PRIMARY KEY (`ID`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1
+
+
+    2019-07-04
+
+   *    Modified the size of DA_LICENCE field in maintenance_vehicle_history table. (size=12)
+
+
+   2019-07-28
+
+   * Added new sub tab sub into Report--->Assets--->Details By Quantity.
+
+   * So, job define and subtabsub tables have changed. Please refer sqlYOG ---> local--->asset_register_uom database in my laptop.
+
+   * I unable to change AWS---> asset_register_uom database.
+
+
+2019-08-09
+
+*need to update Transaction numbers in asset
+
+ ALTER TABLE `Asset`
+    CHANGE `TRANSACTION_NO` `TRANSACTION_NO` varchar(8) NULL ;
+
+    UPDATE Asset SET TRANSACTION_NO = IF(1 = LENGTH(TRANSACTION_NO), CONCAT("TR00000",TRANSACTION_NO),TRANSACTION_NO);
+    UPDATE Asset SET TRANSACTION_NO = IF(2 = LENGTH(TRANSACTION_NO), CONCAT("TR0000",TRANSACTION_NO),TRANSACTION_NO);
+    UPDATE Asset SET TRANSACTION_NO = IF(3 = LENGTH(TRANSACTION_NO), CONCAT("TR000",TRANSACTION_NO),TRANSACTION_NO);
+    UPDATE Asset SET TRANSACTION_NO = IF(4 = LENGTH(TRANSACTION_NO), CONCAT("TR00",TRANSACTION_NO),TRANSACTION_NO);
+    UPDATE Asset SET TRANSACTION_NO = IF(5 = LENGTH(TRANSACTION_NO), CONCAT("TR0",TRANSACTION_NO),TRANSACTION_NO);
+    UPDATE Asset SET TRANSACTION_NO = IF(6 = LENGTH(TRANSACTION_NO), CONCAT("TR",TRANSACTION_NO),TRANSACTION_NO);
+
